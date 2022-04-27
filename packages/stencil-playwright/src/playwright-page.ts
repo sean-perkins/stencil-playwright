@@ -25,6 +25,11 @@ export const test = base.extend<CustomFixtures>({
   page: async ({ page }: CustomTestArgs, use: (r: E2EPage) => Promise<void>) => {
     const originalGoto = page.goto.bind(page);
 
+    /**
+     * Adds a global flag on the window that the test suite
+     * can use to determine when it is safe to execute tests
+     * on hydrated Stencil components.
+     */
     page.addInitScript(`
     (function() {
       window.addEventListener('appload', () => {
