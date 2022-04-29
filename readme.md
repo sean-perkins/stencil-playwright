@@ -91,6 +91,46 @@ test.describe("my-component", () => {
 });
 ```
 
+## Using Custom Matchers
+
+`stencil-playwright` includes a set of custom matchers to match the existing behavior from Stencil's Puppeteer integration and to simplify the process of writing tests on components.
+
+In your `playwright.config.ts` add the following:
+
+```ts
+import { expect } from "@playwright/test";
+import { matchers } from "stencil-playwright";
+
+expect.extend(matchers);
+```
+
+You can now use the custom matchers in your tests.
+
+### Supported Matchers
+
+| Matcher                        | Description                                                                                           |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------- |
+| `toHaveReceivedEvent`          | Will check if the event spy received the expected event.                                              |
+| `toHaveReceivedEventDetail`    | Will check if the event spy received the expected event with the expected detail.                     |
+| `toHaveReceivedEventTimes`     | Will check if the event spy received the expected event a specific number of times.                   |
+| `toHaveNthReceivedEventDetail` | Will check if the event spy received the expected event with the expected detail at a specific index. |
+
+## Advanced Configurations
+
+Since this plugin is not coupled to the Stencil architecture, it is unable to take advantage of the metadata from the Stencil config directly.
+
+There are limited configurations that the Playwright test runner can take advantage of, that are specific to the Stencil eco-system. For those use cases, create a `stencil-playwright.json` config file in the root of your Stencil project (at the same folder depth as your playwright config).
+
+Available configurations:
+
+```json
+{
+  "namespace": "stencil-namespace"
+}
+```
+
+The `namespace` is used for injecting the esm script when using the `.setContent` fixture.
+
 ## Running Tests
 
 Running the following commands from your Stencil component library to test with Playwright.

@@ -63,4 +63,6 @@ export interface E2EPage extends Page {
   spyOnEvent: (eventName: string) => Promise<EventSpy>;
   _e2eEventsIds: number;
   _e2eEvents: Map<number, any>;
+
+  setContent(html: string): Promise<void>;
 }

@@ -23,6 +23,7 @@ type CustomFixtures = {
 
 export const test = base.extend<CustomFixtures>({
   page: async ({ page }: CustomTestArgs, use: (r: E2EPage) => Promise<void>) => {
+
     const originalGoto = page.goto.bind(page);
 
     /**
@@ -38,7 +39,7 @@ export const test = base.extend<CustomFixtures>({
     })();`);
     // Overridden Playwright methods
     page.goto = (url: string) => goToPage(page, url, originalGoto);
-    page.setContent = (html: string) => setContent(page, html);
+    page.setContent = (html: string) => setContent(page, html, test.info());
     // Custom methods
     page.waitForChanges = (timeoutMs?: number) => waitForChanges(page, timeoutMs);
     page.spyOnEvent = (eventName: string) => spyOnEvent(page, eventName);

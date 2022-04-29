@@ -20,6 +20,8 @@ export namespace Components {
          */
         "middle": string;
     }
+    interface MyEventComponent {
+    }
 }
 declare global {
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
@@ -28,8 +30,15 @@ declare global {
         prototype: HTMLMyComponentElement;
         new (): HTMLMyComponentElement;
     };
+    interface HTMLMyEventComponentElement extends Components.MyEventComponent, HTMLStencilElement {
+    }
+    var HTMLMyEventComponentElement: {
+        prototype: HTMLMyEventComponentElement;
+        new (): HTMLMyEventComponentElement;
+    };
     interface HTMLElementTagNameMap {
         "my-component": HTMLMyComponentElement;
+        "my-event-component": HTMLMyEventComponentElement;
     }
 }
 declare namespace LocalJSX {
@@ -47,8 +56,12 @@ declare namespace LocalJSX {
          */
         "middle"?: string;
     }
+    interface MyEventComponent {
+        "onMyEvent"?: (event: CustomEvent<string>) => void;
+    }
     interface IntrinsicElements {
         "my-component": MyComponent;
+        "my-event-component": MyEventComponent;
     }
 }
 export { LocalJSX as JSX };
@@ -56,6 +69,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "my-event-component": LocalJSX.MyEventComponent & JSXBase.HTMLAttributes<HTMLMyEventComponentElement>;
         }
     }
 }

@@ -16,7 +16,8 @@ export class EventSpy {
    */
   private cursor = 0;
   private queuedHandler: (() => void)[] = [];
-  public events: Event[] = [];
+
+  events: CustomEvent[] = [];
 
   constructor(public eventName: string) { }
 
@@ -24,7 +25,15 @@ export class EventSpy {
     return this.events.length;
   }
 
-  public next() {
+  get firstEvent() {
+    return this.events[0] || null;
+  }
+
+  get lastEvent() {
+    return this.events[this.events.length - 1] || null;
+  }
+
+  next() {
     const { cursor } = this;
     this.cursor++;
 
@@ -48,7 +57,7 @@ export class EventSpy {
     }
   }
 
-  public push(ev: Event) {
+  push(ev: CustomEvent) {
     this.events.push(ev);
     const next = this.queuedHandler.shift();
     if (next) {
@@ -60,7 +69,7 @@ export class EventSpy {
 /**
  * Initializes information required to
  * spy on events.
- * The ionicOnEvent function is called in the
+ * The stencilPlaywrightOnEvent function is called in the
  * context of the current page. This lets us
  * respond to an event listener created within
  * the page itself.
@@ -69,7 +78,7 @@ export const initPageEvents = async (page: E2EPage) => {
   page._e2eEventsIds = 0;
   page._e2eEvents = new Map();
 
-  await page.exposeFunction('ionicOnEvent', (id: number, ev: any) => {
+  await page.exposeFunction('stencilPlaywrightOnEvent', (id: number, ev: CustomEvent) => {
     const context = page._e2eEvents.get(id);
     if (context) {
       context.callback(ev);
@@ -82,7 +91,7 @@ export const initPageEvents = async (page: E2EPage) => {
  * page context to updates the _e2eEvents map
  * when an event is fired.
  */
-export const addE2EListener = async (page: E2EPage, eventName: string, callback: (ev: any) => void) => {
+export const addE2EListener = async (page: E2EPage, eventName: string, callback: (ev: CustomEvent) => void) => {
   const id = page._e2eEventsIds++;
   page._e2eEvents.set(id, {
     eventName,
@@ -91,8 +100,60 @@ export const addE2EListener = async (page: E2EPage, eventName: string, callback:
 
   await page.evaluate(
     ([eventName, id]) => {
+
+      (window as any).stencilSerializeEventTarget = (target: any) => {
+        // BROWSER CONTEXT
+        if (!target) {
+          return null;
+        }
+        if (target === window) {
+          return { serializedWindow: true };
+        }
+        if (target === document) {
+          return { serializedDocument: true };
+        }
+        if (target.nodeType != null) {
+          const serializedElement: any = {
+            serializedElement: true,
+            nodeName: target.nodeName,
+            nodeValue: target.nodeValue,
+            nodeType: target.nodeType,
+            tagName: target.tagName,
+            className: target.className,
+            id: target.id,
+          };
+          return serializedElement;
+        }
+        return null;
+      };
+
+      (window as any).serializeStencilEvent = (orgEv: CustomEvent) => {
+        const serializedEvent = {
+          bubbles: orgEv.bubbles,
+          cancelBubble: orgEv.cancelBubble,
+          cancelable: orgEv.cancelable,
+          composed: orgEv.composed,
+          currentTarget: (window as any).stencilSerializeEventTarget(orgEv.currentTarget),
+          defaultPrevented: orgEv.defaultPrevented,
+          detail: orgEv.detail,
+          eventPhase: orgEv.eventPhase,
+          isTrusted: orgEv.isTrusted,
+          returnValue: orgEv.returnValue,
+          srcElement: (window as any).stencilSerializeEventTarget(orgEv.srcElement),
+          target: (window as any).stencilSerializeEventTarget(orgEv.target),
+          timeStamp: orgEv.timeStamp,
+          type: orgEv.type,
+          isSerializedEvent: true,
+        };
+        return serializedEvent;
+      }
+
       window.addEventListener(eventName as string, (ev: Event) => {
-        (window as any).ionicOnEvent(id, ev);
+        /**
+         * The event data cannot be passed outside of the browser context,
+         * unless it has been serialized.
+         */
+        (window as any).stencilPlaywrightOnEvent(id, (window as any).serializeStencilEvent(ev));
       });
     },
     [eventName, id]

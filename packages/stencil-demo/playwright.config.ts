@@ -1,5 +1,9 @@
-import type { PlaywrightTestConfig } from '@playwright/test';
+import { expect, PlaywrightTestConfig } from '@playwright/test';
 import { devices } from '@playwright/test';
+
+import { matchers } from 'stencil-playwright';
+
+expect.extend(matchers);
 
 const projects = [
   {
@@ -74,14 +78,14 @@ const config: PlaywrightTestConfig = {
     trace: 'retain-on-failure',
     baseURL: 'http://localhost:3333',
   },
-
   /* Configure projects for major browsers */
   projects,
   webServer: {
     command: 'serve -p 3333',
     port: 3333,
     reuseExistingServer: !process.env.CI
-  }
+  },
+
 };
 
 export default config;
