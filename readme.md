@@ -36,6 +36,12 @@ Stencil Playwright requires the `@playwright/test` package.
 npm install @playwright/test --save-dev
 ```
 
+Stencil's dev server is created before the build is created. When running Playwright in a CI environment, we will need to manually serve the dist output of the Stencil library (this is handled within the Playwright config).
+
+```bash
+npm install serve --save-dev
+```
+
 ### Playwright Config
 
 In your Stencil component library, create a `playwright.config.ts` for your project configurations. It is recommended to apply the following configurations to the standard configuration:
