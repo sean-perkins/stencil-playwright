@@ -33,6 +33,7 @@
     "@types/jest": "^27.0.3",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
+    "serve": "^14.0.1",
     "stencil-playwright": "workspace:*"
   },
   "license": "MIT"
