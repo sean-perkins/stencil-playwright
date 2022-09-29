@@ -13,7 +13,7 @@ jobs:
       matrix:
         node-version: [16]
     steps:
-      - uses: action/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Fetch all Git history for Changesets changelog
       - uses: pnpm/action-setup@v2
