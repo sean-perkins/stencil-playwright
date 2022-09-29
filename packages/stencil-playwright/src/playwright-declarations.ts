@@ -66,3 +66,9 @@ export interface E2EPage extends Page {
 
   setContent(html: string): Promise<void>;
 }
+
+export type BrowserNameOrCallback = string | ((browserName: string) => boolean);
+
+export interface E2ESkip {
+  browser: (browserNameOrCallback: BrowserNameOrCallback, reason?: string) => void;
+}
