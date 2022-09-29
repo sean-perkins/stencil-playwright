@@ -16,6 +16,9 @@
   <a href="https://github.com/sean-perkins/stencil-playwright/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Stencil Playwright is released under the MIT license." />
   </a>
+  <a href="https://app.netlify.com/sites/stencil-playwright/deploys" alt="Netlify Status">
+    <img src="https://api.netlify.com/api/v1/badges/bfcc2fbd-34d4-4315-8815-0b0b53aca606/deploy-status" />
+  </a>
 </p>
 
 ## Quick start
