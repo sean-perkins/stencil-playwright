@@ -18,8 +18,6 @@
   </a>
 </p>
 
-> **This project has not been officially released yet. Please only use this repository for reference/testing**
-
 ## Quick start
 
 ### Install Stencil Playwright
