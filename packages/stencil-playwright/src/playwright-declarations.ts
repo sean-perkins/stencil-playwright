@@ -44,12 +44,6 @@ export interface E2EPage extends Page {
    */
   waitForChanges: (timeoutMs?: number) => Promise<void>;
   /**
-   * Listens on the window for a specific event to be dispatched.
-   * Will wait a maximum of 5 seconds for the event to be dispatched.
-   */
-  waitForCustomEvent: (eventName: string) => Promise<Page>;
-
-  /**
    * Creates a new EventSpy and listens
    * on the window for an event.
    * The test will timeout if the event
@@ -67,7 +61,9 @@ export interface E2EPage extends Page {
   setContent(html: string): Promise<void>;
 }
 
-export type BrowserNameOrCallback = string | ((browserName: string) => boolean);
+type BrowserName = 'chromium' | 'firefox' | 'webkit';
+
+export type BrowserNameOrCallback = BrowserName | ((browserName: BrowserName) => boolean);
 
 export interface E2ESkip {
   browser: (browserNameOrCallback: BrowserNameOrCallback, reason?: string) => void;

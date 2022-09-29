@@ -14,7 +14,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo) =
     throw new Error('setContent unavailable: page is already closed');
   }
 
-  const baseUrl = testInfo.project.use.baseURL;
+  const baseUrl = testInfo.project.use.baseURL ?? process.env.PLAYWRIGHT_TEST_BASE_URL;
 
   let stencilPlaywrightConfig: any;
 
@@ -29,9 +29,11 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo) =
     appScriptUrl = `/dist/${stencilPlaywrightConfig.namespace}/${stencilPlaywrightConfig.namespace}.esm.js`;
   }
 
+  const dir = testInfo.project?.metadata?.rtl ? 'rtl': 'ltr';
+
   const output = `
     <!DOCTYPE html>
-    <html>
+    <html dir="${dir}">
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
