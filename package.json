@@ -1,7 +1,11 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "publish-packages": "turbo run build lint test --filter=stencil-playwright && changeset version && changeset publish"
+  },
   "devDependencies": {
+    "@changesets/cli": "^2.24.4",
     "turbo": "^1.2.5"
   },
   "workspaces": [
