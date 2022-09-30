@@ -33,7 +33,7 @@ export const test = base.extend<CustomFixtures>({
      * can use to determine when it is safe to execute tests
      * on hydrated Stencil components.
      */
-    page.addInitScript(`
+    await page.addInitScript(`
     (function() {
       window.addEventListener('appload', () => {
         window.testAppLoaded = true;
