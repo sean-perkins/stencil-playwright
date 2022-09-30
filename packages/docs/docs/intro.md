@@ -7,6 +7,14 @@ slug: /
 
 Let's discover **Stencil Playwright in less than 5 minutes**.
 
+## Why Playwright vs. Puppeteer?
+
+Playwright can test components across different browsers (chromium, firefox and webkit). Puppeteer can only test components on Chrome.
+
+Playwright has improved support for ShadowDOM, selectors automatically pierce the ShadowDOM. Puppeteer requires using selectors such as `my-component >>> .shadow-element`.
+
+Playwright is decoupled from Stencil allowing you to update to the latest version of Playwright without a Stencil dependency change. Puppeteer is directly coupled to Stencil, meaning you can only use the dependency version specified by Stencil.
+
 ## Getting Started
 
 Get started by **installing Stencil Playwright to your Stencil project**.

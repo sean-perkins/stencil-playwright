@@ -8,7 +8,7 @@ test.describe('my-event-component', () => {
 
     const button = await page.locator('my-event-component button');
 
-    expect(button).toBeVisible();
+    await expect(button).toBeVisible();
   });
 
   test('it should emit an event', async ({ page }) => {
