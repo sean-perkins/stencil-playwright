@@ -42,7 +42,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo) =
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
         ${appScriptUrl !== undefined ? `<script type="module" src="${baseUrl}${appScriptUrl}"></script>` : ''}
-        ${appGlobalCSSUrl !== undefined ? `<link ref="stylesheet" src="${baseUrl}${appGlobalCSSUrl}"/>` : ''}
+        ${appGlobalCSSUrl !== undefined ? `<link rel="stylesheet" href="${baseUrl}${appGlobalCSSUrl}"/>` : ''}
       </head>
       <body>
         ${html}
