@@ -34,17 +34,20 @@ npx playwright install
 In your Stencil component library, create a `playwright.config.ts` for your project configurations. This config file can be located next to your existing `stencil.config.ts`. It is recommended to apply the following configurations:
 
 ```diff
-import type { PlaywrightTestConfig } from '@playwright/test';
+import { expect, PlaywrightTestConfig } from '@playwright/test';
+import { matchers } from 'stencil-playwright';
+
+expect.extend(matchers);
 
 const config: PlaywrightTestConfig = {
-+  testMatch: '*.e2e.ts',
+  testMatch: '*.e2e.ts',
   use: {
-+    baseURL: 'http://localhost:3333'
+    baseURL: 'http://localhost:3333'
   },
   webServer: {
-+    command: 'serve -p 3333',
-+    port: 3333,
-+    reuseExistingServer: !process.env.CI
+    command: 'serve -p 3333',
+    port: 3333,
+    reuseExistingServer: !process.env.CI
   }
 };
 ```
