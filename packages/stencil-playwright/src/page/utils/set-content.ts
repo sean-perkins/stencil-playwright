@@ -25,8 +25,12 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo) =
   }
 
   let appScriptUrl: string | undefined;
+  let appGlobalCSSUrl: string | undefined;
   if (stencilPlaywrightConfig) {
     appScriptUrl = `/dist/${stencilPlaywrightConfig.namespace}/${stencilPlaywrightConfig.namespace}.esm.js`;
+    if (stencilPlaywrightConfig.includeGlobalCSS) {
+      appGlobalCSSUrl = `/dist/${stencilPlaywrightConfig.namespace}/${stencilPlaywrightConfig.namespace}.css`;
+    }
   }
 
   const dir = testInfo.project?.metadata?.rtl ? 'rtl': 'ltr';
@@ -38,6 +42,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo) =
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
         ${appScriptUrl !== undefined ? `<script type="module" src="${baseUrl}${appScriptUrl}"></script>` : ''}
+        ${appGlobalCSSUrl !== undefined ? `<link rel="stylesheet" href="${baseUrl}${appGlobalCSSUrl}"/>` : ''}
       </head>
       <body>
         ${html}

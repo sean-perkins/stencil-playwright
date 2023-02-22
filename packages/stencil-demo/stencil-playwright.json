@@ -1,3 +1,4 @@
 {
-  "namespace": "stencil-demo"
+  "namespace": "stencil-demo",
+  "includeGlobalCSS": true
 }
