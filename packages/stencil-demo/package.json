@@ -26,13 +26,14 @@
     "generate": "stencil generate"
   },
   "dependencies": {
-    "@stencil/core": "^2.13.0"
+    "@stencil/core": "^4.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.26.1",
     "@types/jest": "^27.0.3",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
+    "puppeteer": "^20.7.3",
     "serve": "^14.0.1",
     "stencil-playwright": "workspace:*"
   },

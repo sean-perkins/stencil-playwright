@@ -23,6 +23,10 @@ export namespace Components {
     interface MyEventComponent {
     }
 }
+export interface MyEventComponentCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMyEventComponentElement;
+}
 declare global {
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
@@ -57,7 +61,7 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface MyEventComponent {
-        "onMyEvent"?: (event: CustomEvent<string>) => void;
+        "onMyEvent"?: (event: MyEventComponentCustomEvent<string>) => void;
     }
     interface IntrinsicElements {
         "my-component": MyComponent;
