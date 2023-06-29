@@ -1,5 +1,11 @@
 # stencil-playwright
 
+## 0.3.0
+
+### Minor Changes
+
+- 1ba7cf1: fix: stencil-playwright is compatible with esm
+
 ## 0.2.0
 
 ### Minor Changes
