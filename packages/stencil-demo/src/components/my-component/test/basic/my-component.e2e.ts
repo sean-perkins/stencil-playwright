@@ -7,7 +7,8 @@ test.describe('my-component', () => {
     await page.goto('/src/components/my-component/test/basic/index.html');
 
     const element = page.locator('my-component');
-    await expect(element).toHaveClass('hydrated');
+
+    await expect(element).toHaveClass(/hydrated/);
   });
 
   test('renders changes to the name data', async ({ page }) => {

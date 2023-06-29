@@ -2,7 +2,7 @@
 import path from 'path';
 import { defineConfig } from 'vite';
 
-module.exports = defineConfig({
+export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
@@ -12,7 +12,7 @@ module.exports = defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ["@playwright/test", "@stencil/core"],
+      external: ["@playwright/test", "@stencil/core", "fs"],
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps

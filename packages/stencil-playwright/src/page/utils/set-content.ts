@@ -36,7 +36,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo) =
     }
   }
 
-  const dir = testInfo.project?.metadata?.rtl ? 'rtl': 'ltr';
+  const dir = testInfo.project?.metadata?.rtl ? 'rtl' : 'ltr';
 
   const output = `
     <!DOCTYPE html>
