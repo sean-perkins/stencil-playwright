@@ -1,4 +1,5 @@
 import type { Page, TestInfo } from '@playwright/test';
+import { readFileSync } from 'fs';
 
 /**
  * Overwrites the default Playwright page.setContent method.
@@ -19,7 +20,9 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo) =
   let stencilPlaywrightConfig: any;
 
   try {
-    stencilPlaywrightConfig = require(`${process.cwd()}/stencil-playwright.json`);
+    stencilPlaywrightConfig = JSON.parse(
+      readFileSync(`${process.cwd()}/stencil-playwright.json`, "utf-8")
+    );
   } catch (ex) {
     console.error('Error loading stencil-playwright.json', ex);
   }
