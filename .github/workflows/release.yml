@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0 # Fetch all Git history for Changesets changelog
       - uses: pnpm/action-setup@v2
         with:
-          version: 7
+          version: 8
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
